@@ -73,7 +73,10 @@ function keepItSecretKeepItSafe() {
   // give the div a class of 'magic-imbued-jewelry'
   theRing.className = 'magic-imbued-jewelry'
   // add an event listener so that when a user clicks on the ring, the nazgulScreech function (provided) is invoked
-  theRing.addEventListener('click', oneClick)
+  theRing.addEventListener('click', nazgulScreech)
+  theRing.addEventListener('click', resetOpacity)
+  theRing.addEventListener('click', fadeIn)
+  theRing.addEventListener('click', threeClicks)
   // add the ring as a child of Frodo
   frodo.appendChild(theRing)
 }
@@ -201,7 +204,7 @@ function weWantsIt() {
   // Move Gollum into Mount Doom
   mountDoom.appendChild(gollum)
 }
-weWantsIt()
+// weWantsIt()
 
 // Part 12
 var gollum = document.querySelector('#gollum')
@@ -217,16 +220,13 @@ function thereAndBackAgain() {
   })
   theShire.appendChild(hobbitsBackList)
 }
-thereAndBackAgain()
+// thereAndBackAgain()
 
 var clickCount = 0
 var opacity = 0
 
-function oneClick() {
+function resetOpacity() {
   opacity = 0
-  nazgulScreech()
-  fadeIn()
-  threeClicks()
 }
 
 function fadeIn() {
@@ -238,7 +238,7 @@ function fadeIn() {
 }
 
 function threeClicks() {
-  clickCount += 1
+  clickCount++
   console.log(clickCount++) //Somehow, clickCount goes 1,3,5 instead of 1,2,3
   if(clickCount >= 5) {
     // var newBody = document.createElement('body')
