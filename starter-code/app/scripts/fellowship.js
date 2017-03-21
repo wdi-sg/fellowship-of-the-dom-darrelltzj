@@ -73,7 +73,7 @@ function keepItSecretKeepItSafe() {
   // give the div a class of 'magic-imbued-jewelry'
   theRing.className = 'magic-imbued-jewelry'
   // add an event listener so that when a user clicks on the ring, the nazgulScreech function (provided) is invoked
-  theRing.addEventListener('click', nazgulScreech)
+  theRing.addEventListener('click', oneClick)
   // add the ring as a child of Frodo
   frodo.appendChild(theRing)
 }
@@ -96,11 +96,11 @@ function makeBuddies() {
 }
 makeBuddies()
 
-var gandalf = body.querySelectorAll('aside ul li')[0]
-var legolas = body.querySelectorAll('aside ul li')[1]
-var gimli = body.querySelectorAll('aside ul li')[2]
-var strider = body.querySelectorAll('aside ul li')[3]
-var boromir = body.querySelectorAll('aside ul li')[4]
+var gandalf = body.querySelectorAll('li:not(.hobbit)')[0]
+var legolas = body.querySelectorAll('li:not(.hobbit)')[1]
+var gimli = body.querySelectorAll('li:not(.hobbit)')[2]
+var strider = body.querySelectorAll('li:not(.hobbit)')[3]
+var boromir = body.querySelectorAll('li:not(.hobbit)')[4]
 // Part 5
 function beautifulStranger() {
   // change the 'Strider' textnode to 'Aragorn'
@@ -129,10 +129,21 @@ function forgeTheFellowShip() {
   rivendell.appendChild(theFellowship)
   // add each hobbit and buddy one at a time to 'the-fellowship'
   // after each character is added make an alert that they have joined your party
-  var hobbitList = body.querySelectorAll('.hobbit')
-  hobbitList.forEach(function(hobbit) {
-    theFellowship.appendChild(body.querySelector('.hobbit'))
-    alert(hobbit.textContent + ' has joined the fellowship')
+  var hobbitArr = Array.from(body.querySelectorAll('.hobbit'))
+  var buddyArr = Array.from(body.querySelectorAll('aside ul li'))
+  var characterArr = []
+  buddyArr.forEach(function(buddy,i) {
+    if (i === 4){
+      characterArr.push(buddy)
+    }
+    else {
+      characterArr.push(buddy)
+      characterArr.push(hobbitArr[i])
+    }
+  })
+  characterArr.forEach(function(character) {
+    theFellowship.appendChild(character)
+    alert(character.textContent + ' has joined the fellowship')
   })
 }
 forgeTheFellowShip()
@@ -144,10 +155,8 @@ function theBalrog() {
   gandalf.textContent = 'Gandalf the White'
   // apply style to the element
   // make the background 'white', add a grey border
-  // gandalf.setAttribute('background-color', 'white')
-  // gandalf.setAttribute('border-color', 'grey')
-  gandalf.style.backgroundColor = 'white';
-  gandalf.style.borderColor = 'grey'
+  gandalf.style.backgroundColor = 'white'
+  gandalf.style.border = 'solid grey'
 }
 theBalrog()
 
@@ -160,7 +169,7 @@ function hornOfGondor() {
   // put a linethrough on boromir's name
   // Remove Boromir from the Fellowship
   boromir.style.textDecoration = 'line-through'
-  body.querySelector('aside ul').removeChild(boromir)
+  body.querySelector('section div').removeChild(boromir)
 }
 hornOfGondor()
 
@@ -209,3 +218,34 @@ function thereAndBackAgain() {
   theShire.appendChild(hobbitsBackList)
 }
 thereAndBackAgain()
+
+var clickCount = 0
+var opacity = 0
+
+function oneClick() {
+  opacity = 0
+  nazgulScreech()
+  fadeIn()
+  threeClicks()
+}
+
+function fadeIn() {
+  if (opacity <= 1) {
+    opacity += 0.1
+    setTimeout(fadeIn,200)
+  }
+  frodo.style.opacity = opacity
+}
+
+function threeClicks() {
+  clickCount += 1
+  console.log(clickCount++) //Somehow, clickCount goes 1,3,5 instead of 1,2,3
+  if(clickCount >= 5) {
+    // var newBody = document.createElement('body')
+    var header = document.createElement('h1')
+    header.textContent = 'The Ring has been returned to Sauron and the world is over.'
+    // newBody.appendChild(header)
+    document.querySelector('html').removeChild(body)
+    document.querySelector('html').appendChild(header)
+  }
+}
