@@ -204,7 +204,7 @@ function weWantsIt() {
   // Move Gollum into Mount Doom
   mountDoom.appendChild(gollum)
 }
-// weWantsIt()
+weWantsIt()
 
 // Part 12
 var gollum = document.querySelector('#gollum')
@@ -212,15 +212,18 @@ function thereAndBackAgain() {
   // remove Gollum and the Ring from the document
   mountDoom.removeChild(gollum)
   // remove all the buddies from the document
-  rivendell.removeChild(document.querySelector('aside'))
-  var hobbitsBackList = document.createElement('ul')
+  var buddiesArr = Array.from(document.querySelectorAll('li:not(.hobbit)'))
+  buddiesArr.forEach(function(buddy) {
+    rivendell.querySelector('div').removeChild(buddy)
+  })
   // Move all the hobbits back to the shire
+  var hobbitsBackList = document.createElement('ul')
   document.querySelectorAll('.hobbit').forEach(function(hobbit) {
     hobbitsBackList.appendChild(hobbit)
   })
   theShire.appendChild(hobbitsBackList)
 }
-// thereAndBackAgain()
+thereAndBackAgain()
 
 var clickCount = 0
 var opacity = 0
